@@ -1,0 +1,12 @@
+# PlantUML JAR file
+plantuml.jar
+
+# Generated output files
+output/
+*.png
+*.svg
+*.pdf
+
+# Temporary files
+*.tmp
+*.temp

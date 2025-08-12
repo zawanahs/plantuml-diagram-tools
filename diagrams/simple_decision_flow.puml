@@ -1,0 +1,41 @@
+@startuml Simple Decision Flow
+!theme plain
+title Order Processing Flowchart
+
+start
+
+:Receive Order;
+
+:Check Inventory;
+
+if (Items in Stock?) then (yes)
+  :Reserve Items;
+  :Process Payment;
+  
+  if (Payment Successful?) then (yes)
+    :Generate Invoice;
+    :Pack Items;
+    :Ship Order;
+    :Send Tracking Info;
+    #palegreen:Order Complete;
+  else (no)
+    :Release Reserved Items;
+    :Send Payment Failed Email;
+    #pink:Order Cancelled;
+  endif
+else (no)
+  :Check Supplier Availability;
+  
+  if (Can Restock?) then (yes)
+    :Create Purchase Order;
+    :Notify Customer of Delay;
+    #yellow:Order Pending;
+  else (no)
+    :Send Out of Stock Email;
+    #pink:Order Cancelled;
+  endif
+endif
+
+stop
+
+@enduml

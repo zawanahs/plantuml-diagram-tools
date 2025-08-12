@@ -1,0 +1,73 @@
+@startuml Example Flowchart
+!theme plain
+title Example Business Process Flowchart
+
+start
+
+:User Login;
+note right: User enters credentials
+
+if (Valid Credentials?) then (yes)
+  :Authenticate User;
+  :Load Dashboard;
+  
+  fork
+    :Fetch Recent Activities;
+  fork again
+    :Load User Preferences;
+  fork again
+    :Check Notifications;
+  end fork
+  
+  :Display Dashboard;
+  
+  while (User Active?) is (yes)
+    :User Selection;
+    
+    switch (Action?)
+    case (View Reports)
+      :Load Reports Module;
+      :Generate Report;
+      :Display Report;
+    case (Update Profile)
+      :Open Profile Editor;
+      :Save Changes;
+      :Update Database;
+    case (Process Transaction)
+      partition "Transaction Processing" {
+        :Validate Transaction;
+        if (Transaction Valid?) then (yes)
+          :Process Payment;
+          :Update Records;
+          :Send Confirmation;
+        else (no)
+          :Show Error Message;
+          :Log Failed Transaction;
+        endif
+      }
+    case (Logout)
+      :Clear Session;
+      :Log Activity;
+      break
+    endswitch
+    
+  endwhile (no)
+  
+else (no)
+  :Display Error Message;
+  :Log Failed Attempt;
+  
+  if (Too Many Attempts?) then (yes)
+    :Lock Account;
+    :Send Alert Email;
+  else (no)
+    :Reset Form;
+  endif
+  
+endif
+
+:End Session;
+
+stop
+
+@enduml
